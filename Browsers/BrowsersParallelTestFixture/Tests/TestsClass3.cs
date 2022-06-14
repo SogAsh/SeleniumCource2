@@ -6,11 +6,11 @@ namespace BrowsersParallelTestFixture.Tests
     [TestFixture]
     class TestClass3 : TestBase
     {
-        [SetUp]
-        public new void SetUp()
-        {
-            Navigate("https://yandex.ru/");
-        }
+        // [SetUp]
+        // public new void SetUp()
+        // {
+        //     Navigate("https://yandex.ru/");
+        // }
 
         [Test]
         public void WikipediaTest()

@@ -20,7 +20,7 @@ namespace BrowsersParallelAll
             options.AddArgument("--window-size=1024,768"); //устанавливем ширину экрана
             Driver = new ChromeDriver(options);
             
-            Navigate("https://www.google.com/");
+            // Navigate("https://www.google.com/");
         }
 
         [TearDown]
