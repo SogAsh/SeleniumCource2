@@ -1,0 +1,15 @@
+root = true
+
+[PageObjects/*.cs]
+resharper_unused_auto_property_accessor_local_highlighting = do_not_show
+resharper_class_never_instantiated_global_highlighting = do_not_show
+resharper_class_never_instantiated_local_highlighting = do_not_show
+resharper_auto_property_can_be_made_get_only_global_highlighting = do_not_show
+resharper_auto_property_can_be_made_get_only_local_highlighting = do_not_show
+
+[PageElements/*.cs]
+resharper_unused_auto_property_accessor_local_highlighting = do_not_show
+resharper_class_never_instantiated_global_highlighting = do_not_show
+resharper_class_never_instantiated_local_highlighting = do_not_show
+resharper_auto_property_can_be_made_get_only_global_highlighting = do_not_show
+resharper_auto_property_can_be_made_get_only_local_highlighting = do_not_show
