@@ -12,7 +12,7 @@ namespace VacationTests.PageObjects
         {
             ModalHeaderLabel = GetModalContext(webDriver).Search(x => x.WithTid("ModalHeader")).Label();
             CrossButton = GetModalContext(webDriver).Search(x => x.WithTid("modal-close")).Button();
-
+            
             StatusLabel = GetModalContext(webDriver).Search(x => x.WithTid("StatusLabel")).Label();
             ClaimTypeLabel = GetModalContext(webDriver).Search(x => x.WithTid("ClaimTypeLabel")).Label();
             ChildAgeLabel = GetModalContext(webDriver).Search(x => x.WithTid("ChildAgeLabel")).Label();
@@ -22,7 +22,7 @@ namespace VacationTests.PageObjects
             AvailableDaysLabel = GetModalContext(webDriver).Search(x => x.WithTid("AvailableDaysLabel")).Label();
             PayNowCheckbox = GetModalContext(webDriver).Search(x => x.WithTid("PayNowCheckbox")).Checkbox();
             DirectorFioLabel = GetModalContext(webDriver).Search(x => x.WithTid("DirectorFioLabel")).Label();
-
+            
             Footer = new ClaimLightboxFooter(GetModalContext(webDriver).Search(x => x.WithTid("ModalFooter")));
         }
 

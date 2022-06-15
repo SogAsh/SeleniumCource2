@@ -4,7 +4,7 @@ using NUnit.Framework;
 using VacationTests.Infrastructure;
 
 [assembly: Parallelizable(ParallelScope.All)] // Запуск в параллель
-[assembly: LevelOfParallelism(3)] // Уровень потоков
+// [assembly: LevelOfParallelism(3)] // Уровень потоков
 
 namespace VacationTests
 {

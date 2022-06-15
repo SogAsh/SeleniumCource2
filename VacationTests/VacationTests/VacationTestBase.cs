@@ -7,6 +7,7 @@ using VacationTests.PageNavigation;
 
 namespace VacationTests
 {
+    [FixtureLifeCycleAttribute(LifeCycle.InstancePerTestCase)]
     public abstract class VacationTestBase
     {
         // создаём словарь для хранения браузеров пула

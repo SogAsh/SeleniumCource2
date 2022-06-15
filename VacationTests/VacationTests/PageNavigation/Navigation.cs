@@ -22,5 +22,10 @@ namespace VacationTests.PageNavigation
         {
             return webDriver.OpenPage<EmployeeVacationListPage>(Urls.EmployeeVacationList(employeeId));
         }
+        
+        public AdminVacationListPage OpenAdminVacationList()
+        {
+            return webDriver.OpenPage<AdminVacationListPage>(Urls.AdminVacationList);
+        }
     }
 }

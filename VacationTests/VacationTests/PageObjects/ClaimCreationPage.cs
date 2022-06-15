@@ -20,7 +20,7 @@ namespace VacationTests.PageObjects
             PayNowCheckbox = webDriver.Search(x => x.WithTid("PayNowCheckbox")).Checkbox();
             DirectorFioCombobox = new DirectorFioCombobox(webDriver.Search(x => x.WithTid("DirectorFioCombobox")));
             SendButton = webDriver.Search(x => x.WithTid("SendButton")).Button();
-
+            
             Footer = new PageFooter(webDriver.Search(x => x.WithTid("Footer")));
         }
 

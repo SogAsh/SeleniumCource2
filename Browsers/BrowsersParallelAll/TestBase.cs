@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 [assembly: Parallelizable(ParallelScope.All)]
-[assembly: LevelOfParallelism(4)]
+// [assembly: LevelOfParallelism(4)]
 
 namespace BrowsersParallelAll
 {

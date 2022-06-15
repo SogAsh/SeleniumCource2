@@ -10,13 +10,8 @@ namespace VacationTests.PageObjects
     {
         public EmployeeVacationListPage(IWebDriver webDriver) : base(webDriver)
         {
-            TitleLabel = webDriver.Search(x => x.WithTid("TitleLabel")).Label();
-            ClaimsTab = webDriver.Search(x => x.WithTid("ClaimsTab")).Link();
-            SalaryCalculatorTab = webDriver.Search(x => x.WithTid("SalaryCalculatorTab")).Link();
-            CreateButton = webDriver.Search(x => x.WithTid("CreateButton")).Button();
-            ClaimList = new EmployeeClaimList(webDriver.Search(x => x.WithTid("ClaimList")));
-            
-            Footer = new PageFooter(webDriver.Search(x => x.WithTid("Footer")));
+            // своя инициализация для сложного контрола
+            ClaimList = new EmployeeClaimList(webDriver.Search(x => x.WithTid("claimList")));
         }
 
         public Label TitleLabel { get; private set; }
@@ -24,7 +19,6 @@ namespace VacationTests.PageObjects
         public Link SalaryCalculatorTab { get; private set; }
         public Button CreateButton { get; private set; }
         public EmployeeClaimList ClaimList { get; private set; }
-        
         public PageFooter Footer { get; private set; }
     }
 }

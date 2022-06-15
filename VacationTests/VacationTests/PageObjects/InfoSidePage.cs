@@ -11,7 +11,7 @@ namespace VacationTests.PageObjects
         {
             HeaderLabel = GetModalContext(webDriver).Search(x => x.WithTid("SidePageHeader")).Label();
             CrossButton = GetModalContext(webDriver).Search(x => x.WithTid("SidePage__close")).Button();
-
+            
             BodyLabel = GetModalContext(webDriver).Search(x => x.WithTid("SidePageBody")).Label();
             AgreeButton = GetModalContext(webDriver).Search(x => x.WithTid("AgreeButton")).Button();
             NotAgreeButton = GetModalContext(webDriver).Search(x => x.WithTid("NotAgreeButton")).Button();

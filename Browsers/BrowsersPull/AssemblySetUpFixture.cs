@@ -3,7 +3,7 @@ using Kontur.Selone.WebDrivers;
 using NUnit.Framework;
 
 [assembly: Parallelizable(ParallelScope.All)]
-[assembly: LevelOfParallelism(4)]
+// [assembly: LevelOfParallelism(4)]
 
 namespace BrowsersPull
 {

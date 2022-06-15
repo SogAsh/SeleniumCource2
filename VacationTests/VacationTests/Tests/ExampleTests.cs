@@ -7,7 +7,7 @@ using VacationTests.PageObjects;
 
 namespace VacationTests.Tests
 {
-    //[NonParallelizable] // тут можно указать, что тесты класса не должны / должны идти в параллель
+    // [Parallelizable ] // тут можно указать, что тесты класса не должны / должны идти в параллель
     public class
         ExampleTests : VacationTestBase // класс с тестами наследуется от базового класса, в котором могут быть SetUp и TearDown
     {
