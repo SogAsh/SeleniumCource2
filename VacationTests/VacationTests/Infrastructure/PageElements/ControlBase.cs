@@ -2,6 +2,7 @@ using System.Linq;
 using System.Reflection;
 using Kontur.Selone.Extensions;
 using Kontur.Selone.Properties;
+using Kontur.Selone.Selectors.Context;
 using OpenQA.Selenium;
 using VacationTests.Infrastructure.Properties;
 
@@ -16,36 +17,7 @@ namespace VacationTests.Infrastructure.PageElements
         {
             container = searchContext.SearchElement(by);
             
-            // всё также получаем все элементы страницы и выбираем те, которые наследуются от ControlBase
-            var props = GetType().GetProperties()
-                .Where(p => typeof(ControlBase).IsAssignableFrom(p.PropertyType)).ToList();
-
-            foreach (var prop in props)
-            {
-                // для каждого элемента проверяем, есть ли наш атрибут ByTidAttribute
-                var tidName = prop.GetCustomAttributes<ByTidAttribute>()
-                                  .Select(x => x.Tid) // если есть, запоминаем значение Tid
-                                  .FirstOrDefault()
-                              ?? prop.Name; // если нет атрибута, то берём название элемента (свойства класса) 
-            
-                // запоминаем селектор
-                var contextBy = container.Search(x => x.WithTid(tidName));
-                // пробуем достать конструктор
-                var constructor = prop.PropertyType.GetConstructor(new[] { typeof(ISearchContext), typeof(By) });
-            
-                // если есть конструктор в методе инициализации страницы, то используем его
-                if (constructor != null)
-                {
-                    var value = constructor.Invoke(new object[] { contextBy.SearchContext, contextBy.By });
-                    prop.SetValue(this, value);
-                }
-                // если нет конструктора
-                else 
-                {
-                    // можно попробовать получить другой тип конструктора и проинициализировать по нему
-                }
-                // дальше код попробует проинициализировать элемент из метода инициализации класса
-            }
+            ControlExtensions.InitializeControls(this, container);
         }
 
         public IProp<bool> Present => container.Present(); // Typo IsPreset. Expression reflection

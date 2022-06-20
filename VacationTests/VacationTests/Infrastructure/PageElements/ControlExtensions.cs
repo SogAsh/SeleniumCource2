@@ -18,7 +18,46 @@ namespace VacationTests.Infrastructure.PageElements
 
         public static void InitializeControls(object control, ISearchContext searchContext)
         {
-            // todo: добавить код автосоздания контролов
+            // всё также получаем все элементы страницы и выбираем те, которые наследуются от ControlBase
+            var props = control.GetType().GetProperties()
+                .Where(p => typeof(ControlBase).IsAssignableFrom(p.PropertyType)).ToList();
+
+            foreach (var prop in props)
+            {
+                // для каждого элемента проверяем, есть ли наш атрибут ByTidAttribute
+                var tidName = prop.GetCustomAttributes<ByTidAttribute>()
+                                  .Select(x => x.Tid) // если есть, запоминаем значение Tid
+                                  .FirstOrDefault()
+                              ?? prop.Name; // если нет атрибута, то берём название элемента (свойства класса) 
+             
+                // запоминаем селектор 
+                var contextBy = searchContext.Search(x => x.WithTid(tidName));
+                // пробуем достать конструктор 
+                var constructor = prop.PropertyType.GetConstructor(new[] { typeof(ISearchContext), typeof(By) });
+             
+                // если есть конструктор в методе инициализации страницы, то используем его
+                if (constructor != null)
+                { 
+                    var value = constructor.Invoke(new object[] { contextBy.SearchContext, contextBy.By });
+                    prop.SetValue(control, value);
+                } 
+                else 
+                {
+                    // можно попробовать получить другой тип конструктора и проинициализировать по нему
+                    constructor = prop.PropertyType.GetConstructor(new[] { typeof(IContextBy) });
+                    if (constructor != null)
+                    {
+                        var value = constructor.Invoke(new object[] { contextBy });
+                        prop.SetValue(control, value);    
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(
+                            $"Control should contain constructor {prop.PropertyType.Name}(ISearchContext, By) or (IContextBy)");
+                        // дальше код попробует проинициализировать элемент из метода инициализации класса
+                    }
+                }
+            }
         }
 
         public static Button Button(this IContextBy contextBy)

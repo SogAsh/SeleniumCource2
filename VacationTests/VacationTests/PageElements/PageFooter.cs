@@ -9,8 +9,8 @@ namespace VacationTests.PageElements
     {
         public PageFooter(IContextBy contextBy) : base(contextBy.SearchContext, contextBy.By)
         {
-            KnowEnvironmentLink = container.Search(x => x.WithTid("KnowEnvironmentLink")).Link();
-            OurFooterLink = container.Search(x => x.WithTid("OurFooterLink")).Link();
+            // KnowEnvironmentLink = container.Search(x => x.WithTid("KnowEnvironmentLink")).Link();
+            // OurFooterLink = container.Search(x => x.WithTid("OurFooterLink")).Link();
         }
 
         public Link KnowEnvironmentLink { get; private set; }

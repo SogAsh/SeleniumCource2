@@ -11,7 +11,7 @@ namespace VacationTests.PageObjects
         public EmployeeVacationListPage(IWebDriver webDriver) : base(webDriver)
         {
             // своя инициализация для сложного контрола
-            ClaimList = new EmployeeClaimList(webDriver.Search(x => x.WithTid("claimList")));
+            // ClaimList = new EmployeeClaimList(webDriver.Search(x => x.WithTid("claimList")));
         }
 
         public Label TitleLabel { get; private set; }
