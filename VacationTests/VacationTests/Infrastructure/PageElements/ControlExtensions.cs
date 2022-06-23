@@ -1,3 +1,4 @@
+// Вставьте сюда финальное содержимое файла Infrastructure/PageElements/ControlExtensions.cs
 using System;
 using System.Linq;
 using System.Reflection;

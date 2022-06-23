@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using VacationTests.Infrastructure;
+using VacationTests.Infrastructure.PageElements;
 
 namespace VacationTests.Tests.EmployeePage
 {

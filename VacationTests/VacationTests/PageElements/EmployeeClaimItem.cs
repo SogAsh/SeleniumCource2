@@ -11,9 +11,9 @@ namespace VacationTests.PageElements
     {
         public EmployeeClaimItem(IContextBy contextBy) : base(contextBy.SearchContext, contextBy.By)
         {
-            TitleLink = container.Search(x => x.WithTid("TitleLink")).Link();
-            PeriodLabel = container.Search(x => x.WithTid("PeriodLabel")).Label();
-            StatusLabel = container.Search(x => x.WithTid("StatusLabel")).Label();
+            // TitleLink = container.Search(x => x.WithTid("TitleLink")).Link();
+            // PeriodLabel = container.Search(x => x.WithTid("PeriodLabel")).Label();
+            // StatusLabel = container.Search(x => x.WithTid("StatusLabel")).Label();
         }
 
         // при обращении из теста к любому элементу списка отпусков будут доступны три свойства

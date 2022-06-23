@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using VacationTests.Infrastructure;
+using VacationTests.Infrastructure.PageElements;
 using VacationTests.PageObjects;
 
 namespace VacationTests.PageNavigation
@@ -26,6 +27,13 @@ namespace VacationTests.PageNavigation
         public AdminVacationListPage OpenAdminVacationList()
         {
             return webDriver.OpenPage<AdminVacationListPage>(Urls.AdminVacationList);
+        }
+        
+        public AverageDailyEarningsCalculatorPage OpenAverageDailyEarningsCalculator(string employeeId = "1")
+        {
+            var page = OpenEmployeeVacationList(employeeId);
+            page.SalaryCalculatorTab.Visible.Wait().EqualTo(true);
+            return page.SalaryCalculatorTab.ClickAndOpen<AverageDailyEarningsCalculatorPage>();
         }
     }
 }

@@ -31,7 +31,7 @@ namespace VacationTests.PageObjects
         }
         public void WaitLoaded(int? timeout = null)
         {
-            LoginAsAdminButton.Present.Wait().EqualTo(true);
+            LoginAsAdminButton.WaitPresence();
             LoginAsEmployeeButton.Present.Wait().EqualTo(true);
         }
     }

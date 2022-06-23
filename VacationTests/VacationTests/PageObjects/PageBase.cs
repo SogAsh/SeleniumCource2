@@ -18,7 +18,6 @@ namespace VacationTests.PageObjects
         {
             WrappedDriver = webDriver;
             ControlExtensions.InitializeControls(this, webDriver);
-
         }
 
         public IWebDriver WrappedDriver { get; }

@@ -13,5 +13,10 @@ namespace VacationTests.PageNavigation
         {
             return Host + $"/#/user/{employeeId}";
         }
+        
+        public static string AverageDailyEarningsCalculator(string employeeId)
+        {
+            return Host + $"/#/user/{employeeId}";
+        }
     }
 }
