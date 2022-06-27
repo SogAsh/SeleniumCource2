@@ -1,6 +1,10 @@
 using System;
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
+using OpenQA.Selenium.Chrome;
+using VacationTests.Infrastructure;
+using VacationTests.PageNavigation;
 
 namespace VacationTests.Claims
 {
@@ -84,7 +88,7 @@ namespace VacationTests.Claims
                 new Director(24939, "Захаров Максим Николаевич", "Руководитель направления тестирования"),
                 new DateTime(2022, 03, 29), new DateTime(2022, 04, 09),
                 null, "1", false);
-            var expectClaim = new[] {claim1, claim2};
+            var expectClaim = new[] { claim1, claim2 };
 
             // todo после решения Задания 6 заиспользовать код ниже вместо создания класса напрямую
             /*var expectClaim = new[]
@@ -124,6 +128,90 @@ namespace VacationTests.Claims
             };*/
             var deserialized = ClaimStorage.Deserialize<Claim[]>(localStorageArray);
             deserialized.Should().BeEquivalentTo(expectClaim, options => options.WithoutStrictOrdering());
+        }
+
+        [Test]
+        public void ClaimTest()
+        {
+            var employeeId1 = 1;
+            var employeeId2 = 2;
+            var director = new Director(24939, "Захаров Максим Николаевич", "Руководитель направления тестирования");
+            var startDate = DateTime.Now.Date;
+            var endDate = DateTime.Now.Date.AddDays(7);
+
+            // создаем 3 заявления на отпуск
+            var claim1 = new Claim("1", ClaimType.Paid, ClaimStatus.Accepted, director, startDate, endDate, null,
+                employeeId1.ToString(), false);
+            var claim2 = new Claim("2", ClaimType.Paid, ClaimStatus.Accepted, director, startDate, endDate, null,
+                employeeId1.ToString(), false);
+            var claim3 = new Claim("3", ClaimType.Paid, ClaimStatus.Accepted, director, startDate, endDate, null,
+                employeeId2.ToString(), false);
+
+            // записываем заявления в базу
+            ClaimStorage.Add(new[] {claim1, claim2, claim3});
+        
+            var page = Navigation.OpenEmployeeVacationList(employeeId1.ToString());
+
+            // проверяем, что на списке сотрудника с id=1 два заявления с номерами 1 и 2
+            page.ClaimList.Items.Select(x => x.TitleLink.Text)
+                .Wait().EqualTo(new[] { "Заявление 1", "Заявление 2" });
+        }
+
+        [Test]
+        public void ClaimTest1()
+        {
+            var employeeId1 = "1";
+            var employeeId2 = "2";
+
+            // создаем 3 заявления на отпуск
+            // AClaim() статический метод класса, поэтому его можно вызвать так - ClaimBuilder.AClaim()
+            var claim1 = ClaimBuilder.AClaim().WithId("1").WithUserId(employeeId1).Build();
+            var claim2 = ClaimBuilder.AClaim().WithId("2").WithUserId(employeeId1).Build();
+            var claim3 = ClaimBuilder.AClaim().WithId("3").WithUserId(employeeId2).Build();
+
+            // записываем заявления в базу
+            ClaimStorage.Add(new[] { claim1, claim2, claim3 });
+
+            var page = Navigation.OpenEmployeeVacationList(employeeId1);
+
+            // проверяем, что на списке сотрудника с id=1 два заявления с номерами 1 и 2
+            page.ClaimList.Items.Select(x => x.TitleLink.Text)
+                .Wait().EqualTo(new[] { "Заявление 1", "Заявление 2" });
+        }
+
+        [Test]
+        public void ClaimTest3()
+        {
+            var employeeId1 = "1";
+            var employeeId2 = "2";
+
+            // создаем 3 заявления на отпуск
+            // AClaim() статический метод класса, поэтому его можно вызвать так - ClaimBuilder.AClaim()
+            var claim1 = ClaimBuilder.AClaim().WithUserId(employeeId1).Build();
+            var claim2 = ClaimBuilder.AClaim().WithUserId(employeeId1).Build();
+            var claim3 = ClaimBuilder.AClaim().WithUserId(employeeId2).Build();
+
+            // записываем заявления в базу
+            ClaimStorage.Add(new[] { claim1, claim2, claim3 });
+
+            var page = Navigation.OpenEmployeeVacationList(employeeId1);
+
+            // проверяем, что на списке сотрудника с id=1 два заявления с номерами 1 и 2
+            page.ClaimList.Items.Select(x => x.TitleLink.Text)
+                .Wait().EqualTo(new[] { $"Заявление {claim1.Id}", $"Заявление {claim2.Id}" });
+        }
+
+        [Test]
+        public void ClaimTest4()
+        {
+            // создаем 3 заявления на отпуск
+            var claims = new[]
+            {
+                ClaimBuilder.ADefaultClaim(), ClaimBuilder.ADefaultClaim(), ClaimBuilder.AChildClaim()
+            };
+
+            // записываем заявления в базу
+            ClaimStorage.Add(claims);
         }
     }
 }

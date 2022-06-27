@@ -67,6 +67,14 @@ namespace VacationTests.Claims
         // статический метод, который возвращает экземпляр класса ClaimBuilder вместе со значениями по умолчанию
         public static ClaimBuilder AClaim()
         {
+            // создаем переменные со значениями по умолчанию для каждого свойства класса отпуск
+            // private const string DefaultUserId = "1";
+            // private string id = new Random().Next(101).ToString();
+            // private ClaimType type = ClaimType.Paid;
+            // private ClaimStatus status = ClaimStatus.NonHandled;
+            // private string userId = DefaultUserId;
+            // private int? childAgeInMonths;
+            
             return new ClaimBuilder();
         }
 
@@ -84,6 +92,39 @@ namespace VacationTests.Claims
 
     public class DirectorBuilder
     {
-        // todo: напишите реализацию Builder для класса Director
+        private int id = 14;
+        private string name = "Бублик Владимир Кузьмич";
+        private string position = "Директор департамента";
+        public DirectorBuilder()
+        {
+        }
+        public DirectorBuilder WithId(int newId)
+        {
+            id = newId;
+            return this;
+        }
+        public DirectorBuilder WithName(string name)
+        {
+            this.name = name;
+            return this;
+        }
+        public DirectorBuilder WithPosition(string position)
+        {
+            this.position = position;
+            return this;
+        }
+        public Director Build() => new(id, name, position);
+        
+        public static DirectorBuilder ADirector()
+        {
+            return new DirectorBuilder();
+        }
+        public static Director ADefaultDirector() => ADirector().Build();
+        
+        public static DirectorBuilder TheSuperDirector()
+        {
+            //c id = 24320, name = "Кирпичников Алексей Николаевич", position = "Руководитель управления".
+            return new DirectorBuilder();
+        }
     }
 }
