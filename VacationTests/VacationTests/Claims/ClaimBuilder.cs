@@ -13,6 +13,12 @@ namespace VacationTests.Claims
         private ClaimStatus status = ClaimStatus.NonHandled;
         private string userId = DefaultUserId;
         private int? childAgeInMonths;
+        private int directorId = 14; 
+        private string directorName = "Бублик Владимир Кузьмич";
+        private string positionPosition = "Директор департамента";
+        private DateTime startDate = DateTime.Now.Date.AddDays(7);
+        private DateTime endDate = DateTime.Now.Date.AddDays(12);
+        private bool paidNow = false;
 
         public ClaimBuilder()
         {
@@ -60,9 +66,9 @@ namespace VacationTests.Claims
 
         // основной метод, который возвращает экземпляр класса Claim
         // todo заменить код ниже на public Claim Build() => new(id, type, status, director, startDate, endDate, childAgeInMonths, userId, paidNow);
-        public Claim Build() => new(id, type, status,
-            new Director(14, "Бублик Владимир Кузьмич", "Директор департамента"), DateTime.Now.Date.AddDays(7),
-            DateTime.Now.Date.AddDays(12), childAgeInMonths, userId, false);
+        public Claim Build() => new Claim (id, type, status,
+            new Director(directorId, directorName, positionPosition), startDate,
+            endDate, childAgeInMonths, userId, paidNow);
 
         // статический метод, который возвращает экземпляр класса ClaimBuilder вместе со значениями по умолчанию
         public static ClaimBuilder AClaim()
@@ -113,7 +119,7 @@ namespace VacationTests.Claims
             this.position = position;
             return this;
         }
-        public Director Build() => new(id, name, position);
+        public Director Build() => new Director (id, name, position);
         
         public static DirectorBuilder ADirector()
         {
@@ -121,10 +127,12 @@ namespace VacationTests.Claims
         }
         public static Director ADefaultDirector() => ADirector().Build();
         
-        public static DirectorBuilder TheSuperDirector()
+        public static Director TheSuperDirector()
         {
-            //c id = 24320, name = "Кирпичников Алексей Николаевич", position = "Руководитель управления".
-            return new DirectorBuilder();
+            // private int id = 14;
+            // private string name = "Бублик Владимир Кузьмич";
+            // private string position = "Директор департамента";
+            return new Director(24320, "Кирпичников Алексей Николаевич", "Руководитель управления");
         }
     }
 }
