@@ -13,19 +13,20 @@ namespace VacationTests.Claims
         private ClaimStatus status = ClaimStatus.NonHandled;
         private string userId = DefaultUserId;
         private int? childAgeInMonths;
-        
-        private int directorId = 14; 
-        private string directorName = "Бублик Владимир Кузьмич";
-        private string directorPosition = "Директор департамента";
-        
-        private DateTime startDate = DateTime.Now.Date.AddDays(7);
-        private DateTime endDate = DateTime.Now.Date.AddDays(12);
-        private bool paidNow = false;
+        private Director director = DirectorBuilder.ADefaultDirector();
+        private DateTime startDate = DateTime.Now.AddDays(7).Date;
+        private DateTime endDate = DateTime.Now.AddDays(12).Date;
+        private bool paidNow;
 
         public ClaimBuilder()
         {
         }
-
+        public ClaimBuilder WithDirector(Director newDirector)
+        {
+            director = newDirector;
+            return this;
+        }
+        
         // для каждого свойства создаем метод With<название свойства>, возвращающий ClaimBuilder
         // метод принимает новое значение свойства, записывает это значение в переменную, созданную выше
         // с помощью таких методов можно будет задать необходимые поля
@@ -34,66 +35,60 @@ namespace VacationTests.Claims
             id = newId;
             return this;
         }
-
         public ClaimBuilder WithType(ClaimType newClaimType)
         {
             type = newClaimType;
             return this;
         }
-
         public ClaimBuilder WithStatus(ClaimStatus newStatus)
         {
             status = newStatus;
             return this;
         }
-
         public ClaimBuilder WithUserId(string newUserId)
         {
             userId = newUserId;
             return this;
         }
-
         // можно создать перегрузку метода для удобных входных данных
         public ClaimBuilder WithUserId(int newUserId)
         {
             userId = newUserId.ToString();
             return this;
         }
-
         public ClaimBuilder WithChildAgeInMonths(int newChildAgeInMonths)
         {
             childAgeInMonths = newChildAgeInMonths;
             return this;
         }
-        public ClaimBuilder WithDirector(int directorId, string directorName, string directorPosition)
-        {
-            this.directorId = directorId;
-            this.directorName = directorName;
-            this.directorPosition = directorPosition;
-            return this;
-        }
         public ClaimBuilder WithStartDate(DateTime startDate)
         {
-            this.startDate = startDate;
+            this.startDate = startDate.Date;
             return this;
         }
         public ClaimBuilder WithEndDate(DateTime endDate)
         {
-            this.endDate = endDate;
+            this.endDate = endDate.Date;
             return this;
         }
-        public ClaimBuilder WithEWithPeriodndDate(DateTime startDate, DateTime endDate)
+        public ClaimBuilder WithPaidNow(bool paidNow)
         {
-            this.startDate = startDate;
-            this.endDate = endDate;
+            this.paidNow = paidNow;
             return this;
         }
-
+        public ClaimBuilder WithPeriod(DateTime startDate, DateTime endDate)
+        {
+            if(endDate < startDate)
+                throw new Exception("Дата начала отпуска должна быть раньше даты конца отпуска");
+            if((endDate.Day - startDate.Day) < 3)
+                throw new Exception("Минимальный период отпуска должен быть 3 дня");
+            this.startDate = startDate.Date;
+            this.endDate = endDate.Date;
+            return this;
+        }
         // основной метод, который возвращает экземпляр класса Claim
         // todo заменить код ниже на public Claim Build() => new(id, type, status, director, startDate, endDate, childAgeInMonths, userId, paidNow);
-        public Claim Build() => new Claim (id, type, status,
-            new Director(directorId, directorName, directorPosition), startDate,
-            endDate, childAgeInMonths, userId, paidNow);
+        public Claim Build() => new Claim (id, type, status, director, startDate, endDate, childAgeInMonths, userId, paidNow);
 
         // статический метод, который возвращает экземпляр класса ClaimBuilder вместе со значениями по умолчанию
         public static ClaimBuilder AClaim()
@@ -105,7 +100,6 @@ namespace VacationTests.Claims
             // private ClaimStatus status = ClaimStatus.NonHandled;
             // private string userId = DefaultUserId;
             // private int? childAgeInMonths;
-            
             return new ClaimBuilder();
         }
 
@@ -145,13 +139,11 @@ namespace VacationTests.Claims
             return this;
         }
         public Director Build() => new Director (id, name, position);
-        
         public static DirectorBuilder ADirector()
         {
             return new DirectorBuilder();
         }
         public static Director ADefaultDirector() => ADirector().Build();
         public static Director TheSuperDirector() => ADirector().WithId(24320).WithName("Кирпичников Алексей Николаевич").WithPosition("Руководитель управления").Build();
-
     }
 }
