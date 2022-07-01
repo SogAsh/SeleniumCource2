@@ -80,7 +80,7 @@ namespace VacationTests.Claims
         {
             if(endDate < startDate)
                 throw new Exception("Дата начала отпуска должна быть раньше даты конца отпуска");
-            if((endDate.Day - startDate.Day) < 3)
+            if(endDate < startDate.Date.AddDays(3))
                 throw new Exception("Минимальный период отпуска должен быть 3 дня");
             this.startDate = startDate.Date;
             this.endDate = endDate.Date;
