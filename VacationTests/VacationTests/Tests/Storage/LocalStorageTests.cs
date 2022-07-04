@@ -6,9 +6,7 @@ using VacationTests.PageObjects;
 
 namespace VacationTests.Tests.Storage
 {
-    // todo снять Ignore после выполнения задания 7
     [NonParallelizable]
-    [Ignore("Для проверки реализации методов LocalStorage")]
     public class LocalStorageTests : VacationTestBase
     {
         // название ключа, который будем добавлять
@@ -69,7 +67,7 @@ namespace VacationTests.Tests.Storage
             LocalStorage.SetItem("TestKey", "TestName");
 
             // проверяем, что в LocalStorage два ключа
-            Assert.That(LocalStorage.Length, Is.EqualTo(2));
+            Assert.That(LocalStorage.Length, Is.EqualTo(2)); 
 
             // удаляем отпуск
             LocalStorage.RemoveItem(ClaimsKeyName);

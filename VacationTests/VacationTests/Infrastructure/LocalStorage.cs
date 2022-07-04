@@ -15,32 +15,32 @@ namespace VacationTests.Infrastructure
 
         // получение количества элементов в хранилище
         // todo: public long Length => (long) написать код
-        public long Length;
+        public long Length => (long) webDriver.JavaScriptExecutor().ExecuteScript("return localStorage.length;");
 
         // очистка всего хранилища
         public void Clear()
         {
-            // todo: написать код
+            webDriver.JavaScriptExecutor().ExecuteScript("localStorage.clear();");
         }
 
         // получение данных по ключу keyName
         public string GetItem(string keyName)
         {
-            // todo: написать код
-            return null;
+            var result = webDriver.JavaScriptExecutor().ExecuteScript($"return localStorage.getItem(\"{keyName}\");");
+            return result as string;
         }
 
         // получение ключа на заданной позиции
         public string Key(int keyNumber)
         {
-            // todo: написать код
-            return null;
+            var result = webDriver.JavaScriptExecutor().ExecuteScript($"return localStorage.key(\"{keyNumber}\");");
+            return result.ToString();
         }
 
         // удаление данных с ключом keyName
         public void RemoveItem(string keyName)
         {
-            // todo: написать код
+            webDriver.JavaScriptExecutor().ExecuteScript($"localStorage.removeItem(\"{keyName}\");");
         }
 
         // сохранение пары ключ/значение
