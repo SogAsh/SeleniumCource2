@@ -1,5 +1,7 @@
 ﻿using System;
+using Kontur.Selone.Pages;
 using NUnit.Framework;
+using VacationTests.Claims;
 using VacationTests.Infrastructure;
 using VacationTests.Infrastructure.PageElements;
 using VacationTests.PageObjects;
@@ -31,7 +33,11 @@ namespace VacationTests.Tests.EmployeePage
         [Test]
         public void CreateClaimFromBuilder()
         {
-            
+            var claim = ClaimBuilder.AChildClaim();
+            ClaimStorage.Add(new[] {claim});
+
+            page.Refresh();
+            page.ClaimList.Items.Count.Wait().EqualTo(1);
         }
 
         [Test]
