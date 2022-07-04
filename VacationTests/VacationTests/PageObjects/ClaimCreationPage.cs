@@ -10,17 +10,17 @@ namespace VacationTests.PageObjects
     {
         public ClaimCreationPage(IWebDriver webDriver) : base(webDriver)
         {
-            UserFioLabel = webDriver.Search(x => x.WithTid("UserFioLabel")).Label();
-            ClaimTypeSelect = webDriver.Search(x => x.WithTid("ClaimTypeSelect")).Select();
-            ChildAgeInput = webDriver.Search(x => x.WithTid("ChildAgeInput")).Input();
-            ClaimStartDatePicker = webDriver.Search(x => x.WithTid("ClaimStartDatePicker")).DateInput();
-            ClaimEndDatePicker = webDriver.Search(x => x.WithTid("ClaimEndDatePicker")).DateInput();
-            AvailableDaysMessage = webDriver.Search(x => x.WithTid("AvailableDaysMessage")).Label();
-            AvailableDaysLabel = webDriver.Search(x => x.WithTid("AvailableDaysLabel")).Label();
-            PayNowCheckbox = webDriver.Search(x => x.WithTid("PayNowCheckbox")).Checkbox();
-            DirectorFioCombobox = new DirectorFioCombobox(webDriver.Search(x => x.WithTid("DirectorFioCombobox")));
-            SendButton = webDriver.Search(x => x.WithTid("SendButton")).Button();
-            
+            // UserFioLabel = webDriver.Search(x => x.WithTid("UserFioLabel")).Label();
+            // ClaimTypeSelect = webDriver.Search(x => x.WithTid("ClaimTypeSelect")).Select();
+            // ChildAgeInput = webDriver.Search(x => x.WithTid("ChildAgeInput")).Input();
+            // ClaimStartDatePicker = webDriver.Search(x => x.WithTid("ClaimStartDatePicker")).DateInput();
+            // ClaimEndDatePicker = webDriver.Search(x => x.WithTid("ClaimEndDatePicker")).DateInput();
+            // AvailableDaysMessage = webDriver.Search(x => x.WithTid("AvailableDaysMessage")).Label();
+            // AvailableDaysLabel = webDriver.Search(x => x.WithTid("AvailableDaysLabel")).Label();
+            // PayNowCheckbox = webDriver.Search(x => x.WithTid("PayNowCheckbox")).Checkbox();
+            // DirectorFioCombobox = new DirectorFioCombobox(webDriver.Search(x => x.WithTid("DirectorFioCombobox")));
+            // SendButton = webDriver.Search(x => x.WithTid("SendButton")).Button();
+            //
             Footer = new PageFooter(webDriver.Search(x => x.WithTid("Footer")));
         }
 

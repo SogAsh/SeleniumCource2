@@ -14,9 +14,9 @@ namespace VacationTests.PageNavigation
             return Host + $"/#/user/{employeeId}";
         }
         
-        public static string AverageDailyEarningsCalculator(string employeeId)
+        public static string ClaimCreationList(string vacationId)
         {
-            return Host + $"/#/user/{employeeId}";
+            return Host + $"/#/vacation/{vacationId}";
         }
     }
 }

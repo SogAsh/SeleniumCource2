@@ -35,5 +35,10 @@ namespace VacationTests.PageNavigation
             page.SalaryCalculatorTab.Visible.Wait().EqualTo(true);
             return page.SalaryCalculatorTab.ClickAndOpen<AverageDailyEarningsCalculatorPage>();
         }
+        
+        public ClaimCreationPage OpenClaimCreationPage(string vacation = "1")
+        {
+            return webDriver.OpenPage<ClaimCreationPage>(Urls.ClaimCreationList(vacation));
+        }
     }
 }
