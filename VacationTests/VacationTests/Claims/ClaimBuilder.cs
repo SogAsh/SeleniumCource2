@@ -21,6 +21,8 @@ namespace VacationTests.Claims
         public ClaimBuilder()
         {
         }
+
+        #region With parametrs
         public ClaimBuilder WithDirector(Director newDirector)
         {
             director = newDirector;
@@ -86,6 +88,8 @@ namespace VacationTests.Claims
             this.endDate = endDate.Date;
             return this;
         }
+        #endregion
+        
         // основной метод, который возвращает экземпляр класса Claim
         // todo заменить код ниже на public Claim Build() => new(id, type, status, director, startDate, endDate, childAgeInMonths, userId, paidNow);
         public Claim Build() => new Claim (id, type, status, director, startDate, endDate, childAgeInMonths, userId, paidNow);
@@ -123,6 +127,8 @@ namespace VacationTests.Claims
         public DirectorBuilder()
         {
         }
+
+        #region With parametrs
         public DirectorBuilder WithId(int newId)
         {
             id = newId;
@@ -138,6 +144,8 @@ namespace VacationTests.Claims
             this.position = position;
             return this;
         }
+        #endregion
+        
         public Director Build() => new Director (id, name, position);
         public static DirectorBuilder ADirector()
         {

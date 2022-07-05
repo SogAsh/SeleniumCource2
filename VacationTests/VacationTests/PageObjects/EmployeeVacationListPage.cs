@@ -20,7 +20,6 @@ namespace VacationTests.PageObjects
         public Button CreateButton { get; private set; }
         public EmployeeClaimList ClaimList { get; private set; }
         public PageFooter Footer { get; private set; }
-        
-        
+        public ClaimCreationPage CreationPage { get; set; }
     }
 }

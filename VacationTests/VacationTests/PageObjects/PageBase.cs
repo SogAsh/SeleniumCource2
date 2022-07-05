@@ -21,5 +21,11 @@ namespace VacationTests.PageObjects
         }
 
         public IWebDriver WrappedDriver { get; }
+        
+        public TPage ChangePageType<TPage>() where TPage : PageBase, new()
+        {
+            TPage page = new TPage();
+            return page;
+        }
     }
 }

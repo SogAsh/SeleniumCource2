@@ -213,36 +213,48 @@ namespace VacationTests.Claims
             ClaimStorage.Add(claims);
         }
         
-        // [Test]
-        // public void ClaimTest5Record()
-        // {
-        //     var page = Navigation.OpenEmployeeVacationList(employeeId1);
-        //     
-        //     // создаем 3 заявления на отпуск
-        //     // CreateDefault() статический метод класса, поэтому его можно вызвать так - Claim.CreateDefault()
-        //     // для указания нужных свойств используется ключевое слово `with`
-        //     // в фигурных скобках перечисляются необходимые для теста свойства и их значения
-        //     var claim1 = Claim.CreateDefault() with {Id = "1", UserId = employeeId1};
-        //     var claim2 = Claim.CreateDefault() with {Id = "2", UserId = employeeId1};
-        //     var claim3 = Claim.CreateDefault() with {Id = "3", UserId = employeeId2};
-        //
-        //     // записываем заявления в базу
-        //     ClaimStorage.Add(new[] {claim1, claim2, claim3});
-        //
-        //     page.Refresh();
-        //
-        //     // проверяем, что на списке сотрудника с id=1 два заявления с номерами 1 и 2
-        //     page.ClaimList.Items.Select(x => x.TitleLink.Text)
-        //         .Wait().EqualTo(new[] {"Заявление 1", "Заявление 2"});
-        // }
-        //
-        // [Test]
-        // public void ClaimTest6Record()
-        // {
-        //     // создаем 3 заявления на отпуск
-        //     // записываем заявления в базу
-        //     ClaimStorage.Add(new[] {Claim.CreateDefault(), Claim.CreateDefault(), Claim.CreateChildType()});
-        // }
+        [Test]
+        public void ClaimTest5Record()
+        {
+            var page = Navigation.OpenEmployeeVacationList(employeeId1);
+            
+            // создаем 3 заявления на отпуск
+            // CreateDefault() статический метод класса, поэтому его можно вызвать так - Claim.CreateDefault()
+            // для указания нужных свойств используется ключевое слово `with`
+            // в фигурных скобках перечисляются необходимые для теста свойства и их значения
+            var claim1 = Claim.CreateDefault() with {Id = "1", UserId = employeeId1};
+            var claim2 = Claim.CreateDefault() with {Id = "2", UserId = employeeId1};
+            // var claim3 = Claim.CreateDefault() with {Id = "3", UserId = employeeId2};
+        
+            // записываем заявления в базу
+            ClaimStorage.Add(new[] {claim1, claim2});
+        
+            page.Refresh();
+        
+            // проверяем, что на списке сотрудника с id=1 два заявления с номерами 1 и 2
+            page.ClaimList.Items.Select(x => x.TitleLink.Text)
+                .Wait().EqualTo(new[] {"Заявление 1", "Заявление 2"});
+
+            page.ClaimList.Items.Count.Wait().EqualTo(2);
+        }
+        
+        [Test]
+        public void ClaimTest6Record()
+        {
+            var page = Navigation.OpenEmployeeVacationList(employeeId1);
+            // создаем 3 заявления на отпуск
+            // записываем заявления в базу
+            // ClaimStorage.Add(new[] {Claim.CreateDefault(), Claim.CreateDefault(), Claim.CreateChildType()});
+            var claim = Claim.CreateChildType();
+            ClaimStorage.Add(new []{claim});
+            
+            page.Refresh();
+            
+            page.ClaimList.Items.Select(x => x.TitleLink.Text)
+                .Wait().EqualTo(new[] {"Заявление 1"});
+            
+            page.ClaimList.Items.Count.Wait().EqualTo(1);
+        }
         
         private string employeeId1 = "1";
         private string employeeId2 = "2";

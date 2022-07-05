@@ -11,16 +11,11 @@ namespace VacationTests.Tests.EmployeePage
     [TestFixture]
     public class ClaimCreationTests : VacationTestBase
     {
-        [SetUp]
-        public void SetUp()
-        {
-            page = Navigation.OpenEmployeeVacationList();
-        }
         [Test]
         public void CreateClaimFromPage()
         {
-            page.CreateButton.Click();
-            var claimCreationPage = Navigation.OpenClaimCreationPage();
+            var page = Navigation.OpenEmployeeVacationList();
+            var claimCreationPage = page.CreateButton.ClickAndOpen<ClaimCreationPage>();
             claimCreationPage.ClaimTypeSelect.SelectValueByText("По уходу за ребенком");
             claimCreationPage.ChildAgeInput.InputText("3");
             claimCreationPage.ClaimStartDatePicker.SetValue(DateTime.Now.AddDays(5)); 
@@ -33,9 +28,10 @@ namespace VacationTests.Tests.EmployeePage
         [Test]
         public void CreateClaimFromBuilder()
         {
+            var page = Navigation.OpenEmployeeVacationList();
             var claim = ClaimBuilder.AChildClaim();
             ClaimStorage.Add(new[] {claim});
-
+            
             page.Refresh();
             page.ClaimList.Items.Count.Wait().EqualTo(1);
         }
@@ -43,8 +39,12 @@ namespace VacationTests.Tests.EmployeePage
         [Test]
         public void CreateClaimFromRecord()
         {
+            var page = Navigation.OpenEmployeeVacationList();
+            var claim = Claim.CreateChildType() with{ UserId = "1"};
+            ClaimStorage.Add(new[] {claim});
+            
+            page.Refresh();
+            page.ClaimList.Items.Count.Wait().EqualTo(1);
         }
-
-        private EmployeeVacationListPage page;
     }
 }
