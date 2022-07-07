@@ -23,6 +23,7 @@ namespace VacationTests.Tests.EmployeePage
             claimCreationPage.ClaimStartDatePicker.SetValue(DateTime.Now.AddDays(5));
             claimCreationPage.ClaimEndDatePicker.SetValue(DateTime.Now.AddDays(10));
             claimCreationPage.DirectorFioCombobox.SelectValue("Захаров Максим Николаевич");
+            claimCreationPage.DirectorFioCombobox.WaitValue("Захаров Максим Николаевич");
             claimCreationPage.SendButton.Click();
             page.ClaimList.Items.Count.Wait().EqualTo(1);
         }
@@ -90,10 +91,10 @@ namespace VacationTests.Tests.EmployeePage
                 ("Заявление 2", "Иванов Петр Семенович", "01.08.2020 - 14.08.2020", "На согласовании")
             };
             
-            var page = Navigation.OpenEmployeeVacationList();
-            LocalStorage.SetItem(ClaimsKeyName, FirstVacation);
-
             var adminPage = Navigation.OpenAdminVacationList();
+            LocalStorage.SetItem(ClaimsKeyName, FirstVacation);
+            adminPage.Refresh();
+            
             adminPage.ClaimList.Items.Select
                 (claim => Props.Create(claim.TitleLink.Text, claim.UserFioLabel.Text, claim.PeriodLabel.Text, claim.StatusLabel.Text))
                 .Wait().EquivalentTo(expected);
@@ -107,6 +108,77 @@ namespace VacationTests.Tests.EmployeePage
             //     .Wait().EqualTo(new[] { "01.08.2020 - 14.08.2020", "01.08.2020 - 14.08.2020" });
             // adminPage.ClaimList.Items.Select(x => x.StatusLabel.Text)
             //     .Wait().EqualTo(new[] { "На согласовании", "На согласовании" });
+        }
+
+        [Test]
+        public void Scenario_3()
+        {
+            var adminPage = Navigation.OpenAdminVacationList();
+            
+            var claim5 = ClaimBuilder.AClaim().WithId("5").Build();
+            var claim8 = ClaimBuilder.AClaim().WithId("8").Build();
+            var claim2 = ClaimBuilder.AClaim().WithId("2").Build();
+            ClaimStorage.Add(new[] {claim5, claim8, claim2});
+            
+            adminPage.Refresh();
+            adminPage.ClaimList.Items.Select(x => x.TitleLink.Text)
+                .Wait().EqualTo(new[] { $"Заявление {claim5.Id}", $"Заявление {claim8.Id}", $"Заявление {claim2.Id}"});
+        }
+        
+        [Test]
+        public void Scenario_4()
+        {
+            var expected = new[]
+            {
+                (ClaimStatus.NonHandled.GetDescription(), true, true),
+                (ClaimStatus.Accepted.GetDescription(), false, false),
+                (ClaimStatus.Rejected.GetDescription(), false, false)
+            };
+            var adminPage = Navigation.OpenAdminVacationList();
+            
+            var claim1 = Claim.CreateDefault() with {Id = "1", Status = ClaimStatus.NonHandled};
+            var claim2 = Claim.CreateDefault() with {Id = "2", Status = ClaimStatus.Accepted};
+            var claim3 = Claim.CreateDefault() with {Id = "3", Status = ClaimStatus.Rejected};
+
+            ClaimStorage.Add(new[] {claim1, claim2, claim3});
+            
+            adminPage.Refresh();
+            adminPage.ClaimList.Items.Select
+                    (claim => Props.Create(claim.StatusLabel.Text, claim.AcceptButton.Visible, claim.RejectButton.Visible))
+                .Wait().EquivalentTo(expected);
+        }
+        
+        [Test]
+        public void Scenario_5()
+        {
+            var adminPage = Navigation.OpenAdminVacationList();
+            
+            var claim1 = Claim.CreateDefault() with {Id = "1", Status = ClaimStatus.NonHandled};
+
+            ClaimStorage.Add(new[] {claim1});
+            
+            adminPage.Refresh();
+            var el = adminPage.ClaimList.Items.Wait().Single(x => x.AcceptButton.Visible, Is.EqualTo(true));
+            el.AcceptButton.Click();
+            el.StatusLabel.Text.Wait().EqualTo(ClaimStatus.Accepted.GetDescription());
+            el.AcceptButton.Visible.Wait().EqualTo(false);
+        }
+        
+        [Test]
+        public void Scenario_6()
+        {
+            var adminPage = Navigation.OpenAdminVacationList();
+            
+            var claim1 = Claim.CreateDefault() with {Id = "1", Status = ClaimStatus.NonHandled};
+
+            ClaimStorage.Add(new[] {claim1});
+            
+            adminPage.Refresh();
+            var el = adminPage.ClaimList.Items.Wait().Single(x => x.TitleLink.Visible, Is.EqualTo(true));
+            var lb = el.TitleLink.ClickAndOpen<ClaimLightbox>();
+            lb.Footer.AcceptButton.Click();
+            el.StatusLabel.Text.Wait().EqualTo(ClaimStatus.Accepted.GetDescription());
+            
         }
     }
 }

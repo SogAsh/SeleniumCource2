@@ -17,5 +17,7 @@ namespace VacationTests.PageElements
         public Link  UserFioLabel { get; private set; }
         public Label PeriodLabel { get; private set; }
         public Label StatusLabel { get; private set; }
+        public Button AcceptButton { get; private set; }
+        public Button RejectButton { get; private set; }
     }
 }
