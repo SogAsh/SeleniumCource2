@@ -1,6 +1,5 @@
 using Kontur.Selone.Extensions;
 using Kontur.Selone.Selectors.Context;
-using VacationTests.Infrastructure;
 using VacationTests.Infrastructure.PageElements;
 
 namespace VacationTests.PageElements
@@ -20,7 +19,7 @@ namespace VacationTests.PageElements
         public Link TitleLink { get; private set; }
         public Label PeriodLabel { get; private set; }
         public Label StatusLabel { get; private set; }
-
+        
         // можно вот так реализовать метод для наведения мыши на конкретный элемент
         // такой метод может понадобиться, если только при наведении на элемент списка показывается какой-то контрол
         public void MouseOver()
