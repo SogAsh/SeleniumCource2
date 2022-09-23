@@ -10,7 +10,7 @@ using OpenQA.Selenium;
 
 namespace VacationTests.Infrastructure.Properties
 {
-    public static class PropsExtensions
+    public static class PropsExtensions //аналог SeleniumTesting откуда берутся пропы компонентов
     {
         public static IProp<bool> Disabled(this IWebElement webElement)
         {

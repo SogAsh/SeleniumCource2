@@ -154,11 +154,15 @@ namespace VacationTests.Tests.EmployeePage
             var adminPage = Navigation.OpenAdminVacationList();
             
             var claim1 = Claim.CreateDefault() with {Id = "1", Status = ClaimStatus.NonHandled};
+            var claim2 = Claim.CreateDefault() with {Id = "2", Status = ClaimStatus.NonHandled};
 
             ClaimStorage.Add(new[] {claim1});
+            ClaimStorage.Add(new[] {claim2});
             
             adminPage.Refresh();
-            var el = adminPage.ClaimList.Items.Wait().Single(x => x.AcceptButton.Visible, Is.EqualTo(true));
+            var el = adminPage.ClaimList.Items.Wait().Single(x => x.AcceptButton.Visible, Is.EqualTo(true));//
+            var el2 = adminPage.ClaimList.Items.Wait().Single(x => x.UserFioLabel.Text, Is.EqualTo("Заявление 2"));
+            
             el.AcceptButton.Click();
             el.StatusLabel.Text.Wait().EqualTo(ClaimStatus.Accepted.GetDescription());
             el.AcceptButton.Visible.Wait().EqualTo(false);

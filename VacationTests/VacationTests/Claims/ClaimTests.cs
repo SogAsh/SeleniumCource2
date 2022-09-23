@@ -234,6 +234,9 @@ namespace VacationTests.Claims
             // проверяем, что на списке сотрудника с id=1 два заявления с номерами 1 и 2
             page.ClaimList.Items.Select(x => x.TitleLink.Text)
                 .Wait().EqualTo(new[] {"Заявление 1", "Заявление 2"});
+            
+            // page.ClaimList.Items.Select(x => x.TitleLink.Text)
+                // .Wait().EqualTo(new[] {"Заявление 1"}); //Expected array length equal to 1 but was 2
 
             page.ClaimList.Items.Count.Wait().EqualTo(2);
         }

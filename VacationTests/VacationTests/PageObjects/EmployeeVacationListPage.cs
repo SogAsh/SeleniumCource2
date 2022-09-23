@@ -1,4 +1,5 @@
 using Kontur.Selone.Extensions;
+using Kontur.Selone.Selectors.Css;
 using OpenQA.Selenium;
 using VacationTests.Infrastructure;
 using VacationTests.Infrastructure.PageElements;
@@ -12,6 +13,7 @@ namespace VacationTests.PageObjects
         {
             // своя инициализация для сложного контрола
             // ClaimList = new EmployeeClaimList(webDriver.Search(x => x.WithTid("claimList")));
+            CreateButton = webDriver.Search(x => x.Css().WithTid("createButton")).Button();
         }
 
         public Label TitleLabel { get; private set; }

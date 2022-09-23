@@ -31,7 +31,7 @@ namespace VacationTests.Infrastructure
         }
     }
 
-    public static class Extensions
+    public static class Extensions // = Kontur.RetryableAssertions.ValueProviding
     {
         public static IValueProvider<T, T> Wait<T>(this IProp<T> prop)
         {
